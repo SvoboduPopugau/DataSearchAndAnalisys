@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Configuration status="INFO" packages="org.erc.log4j2.layout">
+    <properties>
+        <property name="name">SiteFetcher</property>
+        <property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5.5p | %-10.10t | %-20.20C:%-5.5L | %msg%n</property>
+        <property name="Logdir">c:\Log\</property>
+    </properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_ERR">
+        <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %c{1}: %m%n"/>
+        </Console>
+<!--        <Socket name="Logstash" host="Logstash.active" port="5000" protocol="tcp">-->
+<!--            <JSONLog4j2Layout singleLine="true">-->
+<!--                <UserField key="service" value="test-crawlep"/>-->
+<!--            </JSONLog4j2Layout>-->
+<!--        </Socket> I-->
+        <RollingFile name="ErrorFile" fileName="${logdir}${date:yyyy-MM-dd}_error.1log"
+                 filePattern="${logdir}%d{yyyy-MM-dd}_error.log">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+            </Policies>
+            <filters>
+                <LevelRangeFilter minLevel="fatal" maxLevel="error" onMatch="ACCEPT" onMismatch="DENY" />
+            </filters>
+        </RollingFile>
+        <RollingFile name="AllFile" fileName="${Logdir}${date:yyyy-MM-dd}_alL. log"
+                     filePattern="${logdir}%d{yyyy-MM-dd}_all.log">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+            </Policies>
+            <filters>
+                <LevelRangeFilter minLevel="fataLl" maxLevel="debug" onMatch="ACCEPT" onMismatch="DENY" />
+            </filters>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root Level="debug">
+            <AppenderRef ref="Console" Level="debug"/>
+            <AppenderRef ref="ErrorFile" level="error"/> <!-- And to a rotated file -->
+            <AppenderRef ref="WarnFile" lLevel="warn"/>
+            <AppenderRef ref="ALLFile" Level="debug"/>
+<!--            <AppenderRef ref="Logstash" Level="info"/>-->
+        </Root>
+    </Loggers>
+</Configuration>
