@@ -108,7 +108,7 @@ public class TaskController {
 
     public void ParseNews(Document doc) {
         try {
-            Elements news = doc.getElementsByClass("item-link").select("a");
+            Elements news = doc.select("#dle-content > article > div.post-cont > h2 > a");
             for (Element element : news) {
                 try {
                     String link = element.attr("href");
