@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2f282243-cebb-4571-b56b-35bd8f9cf3b7" name="Changes" comment="Part 1 Parser">
+    <list default="true" id="2f282243-cebb-4571-b56b-35bd8f9cf3b7" name="Changes" comment="NewsSelector changed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/docker/docker-compose.rmq.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +54,8 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -82,7 +87,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682444970874</updated>
-      <workItem from="1682444972168" duration="15245000" />
+      <workItem from="1682444972168" duration="28117000" />
     </task>
     <task id="LOCAL-00001" summary="Part 1 Parser">
       <created>1682462487208</created>
@@ -91,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682462487208</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="NewsSelector changed">
+      <created>1682492943708</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682492943708</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,35 +122,46 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Part 1 Parser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Part 1 Parser" />
+    <MESSAGE value="NewsSelector changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="NewsSelector changed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>118</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>111</line>
+          <line>144</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
+          <line>198</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
+          <line>176</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
