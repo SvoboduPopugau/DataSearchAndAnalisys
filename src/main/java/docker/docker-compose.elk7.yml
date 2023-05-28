@@ -1,0 +1,52 @@
+version: "3.0"
+services:
+  elasticsearch:
+    container_name: es-container
+    image: elasticsearch:7.17.9
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+    networks:
+      - es-net
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+  kibana:
+    container_name: kb-container
+    image: kibana:7.17.9
+    environment:
+      - ELASTICSEARCH_HOSTS=http://es-container:9200
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+  logstash:
+    build:
+      context: ./logstash/
+      args:
+        ELASTIC_VERSION: 7.17.9
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+    ports:
+      - 5044:5044
+      - 50000:50000/tcp
+      - 50000:50000/udp
+      - 9600:9600
+    environment:
+      LS_JAVA_OPTS: -Xms256m -Xmx256m
+      #LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+networks:
+  es-net:
+    driver: bridge
+volumes:
+  elasticsearch-data:

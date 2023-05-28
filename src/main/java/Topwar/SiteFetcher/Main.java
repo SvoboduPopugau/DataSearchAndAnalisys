@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class Main {
     private static Logger log = LogManager.getLogger();
-    private static String site = "https://topwar.ru/news/";
+    private static String site = "https://topwar.ru/news/page/1/";
     private static Thread taskController, taskConsumer;
 
     public static void main(String[] args) {

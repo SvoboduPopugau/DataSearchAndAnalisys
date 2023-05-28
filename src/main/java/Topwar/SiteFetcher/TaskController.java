@@ -2,6 +2,7 @@ package Topwar.SiteFetcher;
 
 import com.rabbitmq.client.*;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -11,12 +12,16 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.elasticsearch.client.RestClient;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.rabbitmq.client.Channel;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -36,6 +41,8 @@ public class TaskController extends Thread{
     private int retryCount = 2;
     private int metadataTimeout = 30 * 1000;
     private Channel channel;
+    private static final String INDEX_NAME = "topwar";
+    private RestHighLevelClient esclient;
 
     public TaskController(Channel channel, String _server) {
         this.channel = channel;
@@ -43,7 +50,10 @@ public class TaskController extends Thread{
         builder = HttpClientBuilder.create().setDefaultCookieStore(httpCookiesStore);
         client = builder.build();
         this.server = _server;
-
+        esclient = new RestHighLevelClient(
+                RestClient.builder(
+                new HttpHost("localhost", 9200, "http")
+        ));
     }
     @Override
     public void run(){
@@ -100,7 +110,11 @@ public class TaskController extends Thread{
                     HttpEntity entity = response.getEntity();
                     if (entity != null) {
                         try {
-                            doc = Jsoup.parse(entity.getContent(), "UTF-8", server);
+                            if (server != null){
+                                doc = Jsoup.parse(entity.getContent(), "UTF-8", server);
+                            } else {
+                                doc = Jsoup.parse(entity.getContent(), "UTF-8", url);
+                            }
                             break;
                         } catch (IOException e) {
                             log.error(e);
@@ -147,6 +161,7 @@ public class TaskController extends Thread{
                     String link = element.attr("href");
                     log.info(element.text());
 
+//                    TODO: Рассчитываем хеш-код от text и href и проверяем в БД
                     publishToMQ(link, exchangeName, queueUrl);
 //                    JSONObject newsData = getPage(link);
 //                    if (newsData != null){
@@ -163,6 +178,7 @@ public class TaskController extends Thread{
         }
     }
 
+//    Собираем Текст статьи, ссылку, заголовок и время публикации
     public void getPage() {
         try {
             channel.basicConsume(queueUrl, false, "ConsumerTag", new DefaultConsumer(channel) {
@@ -174,10 +190,10 @@ public class TaskController extends Thread{
                         throws IOException {
                     long deliveryTag = envelope.getDeliveryTag();
                     String link = new String(body, StandardCharsets.UTF_8);
-                    log.info(link);
+                    log.info("Начинаем обработку странички " + link);
 
-//                    Document ndoc = getUrl(link);
-                    Document ndoc = Jsoup.connect(link).get();
+                    Document ndoc = getUrl(link);
+//                    Document ndoc = Jsoup.connect(link).get();
                     JSONObject file = new JSONObject();
                     String title = null;
                     String datetime = null;
@@ -193,7 +209,7 @@ public class TaskController extends Thread{
                         file.put("title", title);
                         file.put("text", text);
                     }
-                    log.info("Инфорамция о статье" + file.toString());
+                    log.info("Инфорамция о статье " + file.toString());
 //                    TODO: Добавить в очередь где будут результаты парсинга статьи
                     publishToMQ(file.toString(), exchangeName_1, queuePosts);
                     channel.basicAck(deliveryTag, false);
