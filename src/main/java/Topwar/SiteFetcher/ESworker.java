@@ -123,11 +123,6 @@ public class ESworker extends Thread{
     public static void addDocument(String documentId, String document) throws IOException {
         // Пример документа для добавления в индекс
 //        String jsonString = "{\"title\":\"Заголовок документа\", \"datetime\":\"2023-05-28 10:00:00\", \"text\":\"Текст документа\", \"url\":\"http://example.com\", \"id\":\"1\"}";
-
-        GetRequest existReq = new GetRequest(indexName, documentId);
-        boolean exists = client.exists(existReq, RequestOptions.DEFAULT);
-
-        if (!exists){
             IndexRequest request = new IndexRequest(indexName);
             request.id(documentId);
             request.source(document, XContentType.JSON);
@@ -141,11 +136,6 @@ public class ESworker extends Thread{
             } else if (response.getResult() == DocWriteResponse.Result.UPDATED) {
                 log.info("Document updated successfully. Index: " + index + ", ID: " + id);
             }
-        } else {
-            UpdateRequest request = new UpdateRequest(indexName, document);
-            UpdateResponse response = client.update(request, RequestOptions.DEFAULT);
-            log.info("Document "+ documentId + " updated");
-        }
     }
 
     public void queueListen() {
