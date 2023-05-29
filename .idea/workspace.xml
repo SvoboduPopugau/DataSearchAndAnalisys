@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2f282243-cebb-4571-b56b-35bd8f9cf3b7" name="Changes" comment="Part 2 completed">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/docker/docker-compose.elk7.yml" afterDir="false" />
+    <list default="true" id="2f282243-cebb-4571-b56b-35bd8f9cf3b7" name="Changes" comment="ES create and add">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java" afterDir="false" />
     </list>
@@ -128,11 +127,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Docker.docker/docker-compose.elk7.yml.logstash: Compose Deployment" />
         <item itemvalue="Docker.docker/docker-compose.elk7.yml.kibana: Compose Deployment" />
         <item itemvalue="Docker.docker/docker-compose.elk7.yml.elasticsearch: Compose Deployment" />
         <item itemvalue="Docker.docker/docker-compose.elk7.yml: Compose Deployment" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -146,7 +145,7 @@
       <updated>1682444970874</updated>
       <workItem from="1682444972168" duration="28294000" />
       <workItem from="1682525475273" duration="3131000" />
-      <workItem from="1685283157096" duration="16782000" />
+      <workItem from="1685283157096" duration="36037000" />
     </task>
     <task id="LOCAL-00001" summary="Part 1 Parser">
       <created>1682462487208</created>
@@ -169,7 +168,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682512250724</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ES create and add">
+      <created>1685311828148</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1685311828148</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,35 +196,31 @@
     <MESSAGE value="Part 1 Parser" />
     <MESSAGE value="NewsSelector changed" />
     <MESSAGE value="Part 2 completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Part 2 completed" />
+    <MESSAGE value="ES create and add" />
+    <option name="LAST_COMMIT_MESSAGE" value="ES create and add" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>158</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>141</line>
+          <line>149</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>214</line>
-          <option name="timeStamp" value="9" />
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java</url>
+          <line>143</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>192</line>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java</url>
-          <line>196</line>
-          <option name="timeStamp" value="17" />
+          <url>file://$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java</url>
+          <line>161</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

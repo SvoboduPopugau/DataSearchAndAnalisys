@@ -1,5 +1,7 @@
 package Topwar.SiteFetcher;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.rabbitmq.client.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -12,7 +14,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RestClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,7 +30,9 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Objects;
 
 
@@ -41,7 +49,7 @@ public class TaskController extends Thread{
     private int retryCount = 2;
     private int metadataTimeout = 30 * 1000;
     private Channel channel;
-    private static final String INDEX_NAME = "topwar";
+    private static final String indexName = "topwar";
     private RestHighLevelClient esclient;
 
     public TaskController(Channel channel, String _server) {
@@ -159,16 +167,44 @@ public class TaskController extends Thread{
             for (Element element : news) {
                 try {
                     String link = element.attr("href");
-                    log.info(element.text());
+                    String news_title = element.text();
+                    log.info(news_title);
 
-//                    TODO: Рассчитываем хеш-код от text и href и проверяем в БД
-                    publishToMQ(link, exchangeName, queueUrl);
-//                    JSONObject newsData = getPage(link);
-//                    if (newsData != null){
-//                        log.info(newsData);
-//                    } else {
-//                        log.warn("Страница " + link + " пуста");
-//                    }
+//                  Рассчитываем хеш-код от text и href
+                    MessageDigest md = MessageDigest.getInstance("MD5");
+                    byte[] messageDigest = md.digest((news_title + link).getBytes());
+                    BigInteger no = new BigInteger(1, messageDigest);
+                    String hashText = no.toString(16);
+                    while (hashText.length() < 32) {
+                        hashText = "0" + hashText;
+                    }
+
+                    JSONObject hashLink = new JSONObject();
+                    hashLink.put("id", hashText);
+                    hashLink.put("url", link);
+
+
+//                  Проверка того, есть ли id  в Базе или нет
+                    GetRequest request = new GetRequest(indexName, hashLink.get("id").toString());
+                    boolean exist = esclient.exists(request, RequestOptions.DEFAULT);
+
+                    if (!exist) {
+//                        Добавляем документ в БД
+                        IndexRequest indexReq = new IndexRequest(indexName);
+                        indexReq.id(hashLink.get("id").toString());
+                        indexReq.source(hashLink.toString(), XContentType.JSON);
+
+                        IndexResponse response = esclient.index(indexReq, RequestOptions.DEFAULT);
+                        String index = response.getIndex();
+                        String id = response.getId();
+                        log.info("Document created successfully. Index: " + index + ", ID: " + id);
+
+//                    Отправляем в очередь, если документ не существует еще в БД
+                        publishToMQ(hashLink.toString(), exchangeName, queueUrl);
+                    } else {
+                        log.info("Document " + hashLink.get("id").toString() + " already exist");
+                    }
+
                 } catch (Exception e) {
                     log.error(e);
                 }
@@ -189,8 +225,19 @@ public class TaskController extends Thread{
                                            byte[] body)
                         throws IOException {
                     long deliveryTag = envelope.getDeliveryTag();
-                    String link = new String(body, StandardCharsets.UTF_8);
-                    log.info("Начинаем обработку странички " + link);
+                    String hashLink = new String(body, StandardCharsets.UTF_8);
+                    log.info("Начинаем обработку странички " + hashLink);
+
+                    // Создание объекта Gson
+                    Gson gson = new Gson();
+
+
+                    // Преобразование строки в JsonObject
+                    JSONObject jhashLink = gson.fromJson(hashLink, JSONObject.class);
+
+                    // Использование JsonObject
+                    String link = jhashLink.get("url").toString();
+                    String id = jhashLink.get("id").toString();
 
                     Document ndoc = getUrl(link);
 //                    Document ndoc = Jsoup.connect(link).get();
@@ -204,13 +251,15 @@ public class TaskController extends Thread{
                         Elements textelements = ndoc.getElementsByClass("pfull-cont text");
                         text = textelements.text();
 
+                        file.put("id", id);
                         file.put("url", link);
                         file.put("datetime", datetime);
                         file.put("title", title);
                         file.put("text", text);
                     }
                     log.info("Инфорамция о статье " + file.toString());
-//                    TODO: Добавить в очередь где будут результаты парсинга статьи
+
+//                  Добавляем в очередь где будут результаты парсинга статьи
                     publishToMQ(file.toString(), exchangeName_1, queuePosts);
                     channel.basicAck(deliveryTag, false);
                 }

@@ -12,7 +12,7 @@ import java.util.Properties;
 public class Main {
     private static Logger log = LogManager.getLogger();
     private static String site = "https://topwar.ru/news/page/1/";
-    private static Thread taskController, taskConsumer;
+    private static Thread taskController, taskConsumer, postConsumer;
 
     public static void main(String[] args) {
         Properties props = System.getProperties();
@@ -32,6 +32,12 @@ public class Main {
             taskController.start();
             taskConsumer = new Thread(new TaskController(channel, null));
             taskConsumer.start();
+
+//            Connection esconn = factory.newConnection();
+//            Channel eschannel = esconn.createChannel();
+            postConsumer = new Thread(new ESworker(channel, "localhost", 9200));
+            postConsumer.start();
+
         } catch (Exception ex) {
             log.error(ex);
             return;
