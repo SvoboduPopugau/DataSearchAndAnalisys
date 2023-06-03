@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class Main {
     private static Logger log = LogManager.getLogger();
-    private static String site = "https://topwar.ru/news/page/1/";
+    private static String site = "https://topwar.ru/news/";
     private static Thread taskController, taskConsumer, postConsumer;
 
     public static void main(String[] args) {
@@ -30,14 +30,16 @@ public class Main {
             Channel channel = conn.createChannel();
             taskController = new Thread(new TaskController(channel, site));
             taskController.start();
-            taskConsumer = new Thread(new TaskController(channel, null));
+
+            Connection conn2 = factory.newConnection();
+            Channel channel2 = conn2.createChannel();
+            taskConsumer = new Thread(new TaskController(channel2, null));
             taskConsumer.start();
 
-//            Connection esconn = factory.newConnection();
-//            Channel eschannel = esconn.createChannel();
-            postConsumer = new Thread(new ESworker(channel, "localhost", 9200));
+            Connection esconn = factory.newConnection();
+            Channel eschannel = esconn.createChannel();
+            postConsumer = new Thread(new ESworker(eschannel, "localhost", 9200));
             postConsumer.start();
-
         } catch (Exception ex) {
             log.error(ex);
             return;

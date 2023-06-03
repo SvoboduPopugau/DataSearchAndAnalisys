@@ -51,13 +51,15 @@ public class ESworker extends Thread{
                     "type": "keyword"
                   },
                   "text": {
-                    "type": "text"
+                    "type": "text",
+                    "analyzer": "russian"
                   },
                   "title": {
-                    "type": "text"
+                    "type": "text",
+                    "analyzer": "russian"
                   },
                   "url": {
-                    "type": "text"
+                    "type": "keyword"
                   }
                 }
               }
