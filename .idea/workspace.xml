@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2f282243-cebb-4571-b56b-35bd8f9cf3b7" name="Changes" comment="PostConsumer bug fixed. ES saving work correctly">
-      <change afterPath="$PROJECT_DIR$/Примеры агрегации и поиска данных.md" afterDir="false" />
+    <list default="true" id="2f282243-cebb-4571-b56b-35bd8f9cf3b7" name="Changes" comment="Examples of _search queries added and fixed bug of channels in RabbitMq">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/ESworker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Topwar/SiteFetcher/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Примеры агрегации и поиска данных.md" beforeDir="false" afterPath="$PROJECT_DIR$/Примеры агрегации и поиска данных.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +146,7 @@
       <workItem from="1682444972168" duration="28294000" />
       <workItem from="1682525475273" duration="3131000" />
       <workItem from="1685283157096" duration="36274000" />
-      <workItem from="1685397452781" duration="17942000" />
+      <workItem from="1685397452781" duration="26390000" />
     </task>
     <task id="LOCAL-00001" summary="Part 1 Parser">
       <created>1682462487208</created>
@@ -192,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685397926292</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Examples of _search queries added and fixed bug of channels in RabbitMq">
+      <created>1685826155388</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1685826155388</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,7 +221,8 @@
     <MESSAGE value="ES create and add" />
     <MESSAGE value="ES added" />
     <MESSAGE value="PostConsumer bug fixed. ES saving work correctly" />
-    <option name="LAST_COMMIT_MESSAGE" value="PostConsumer bug fixed. ES saving work correctly" />
+    <MESSAGE value="Examples of _search queries added and fixed bug of channels in RabbitMq" />
+    <option name="LAST_COMMIT_MESSAGE" value="Examples of _search queries added and fixed bug of channels in RabbitMq" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

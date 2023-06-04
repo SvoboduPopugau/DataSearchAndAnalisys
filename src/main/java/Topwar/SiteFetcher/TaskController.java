@@ -66,7 +66,7 @@ public class TaskController extends Thread{
     @Override
     public void run(){
         if (server != null) {
-            for (int i = 1; i <= 330; i++){
+            for (int i = 1; i <= 500; i++){
                 ParseNews(getUrl(server + "page/"+ String.valueOf(i)+ "/"));
 //                if (i % 10 == 0){
 //                    try {
